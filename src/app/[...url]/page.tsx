@@ -17,7 +17,8 @@ function constructUrl({ url }: { url: string[] }){
 }
 const Page = async ({params}: PageProps) => {
   const sessionCookie = (await cookies()).get("sessionId")?.value;
-    const {url} = await params
+    const resolvedParams = await params
+    const { url } = resolvedParams;
     const urlInput = constructUrl({ url: url as string[] })
     const isIndexed = await redis.sismember("url-indexes", urlInput);
     const sessionId = (urlInput + "--" + sessionCookie).replace(/\//g, "");
