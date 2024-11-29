@@ -1,6 +1,7 @@
 import { ragChat } from "@/lib/rag-text";
 import { aiUseChatAdapter } from "@upstash/rag-chat/nextjs";
 import { NextRequest } from "next/server";
+export const maxDuration = 60
 export const POST = async (req: NextRequest) => {
     try {
         const timeoutMs = 50000;
