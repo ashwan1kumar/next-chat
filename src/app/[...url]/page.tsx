@@ -16,10 +16,12 @@ function constructUrl({ url }: { url: string[] }){
     return urlTokens.join('//');
 }
 const Page = async ({params}: PageProps) => {
+  const sessionCookie = (await cookies()).get("sessionId")?.value;
     const {url} = await params
     const urlInput = constructUrl({ url: url as string[] })
     const isIndexed = await redis.sismember("url-indexes", urlInput);
-    const session = 'mock-session';
+    const sessionId = (urlInput + "--" + sessionCookie).replace(/\//g, "");
+    const initialMessages = await ragChat.history.getMessages({ amount: 10, sessionId });
     if(!isIndexed){
         await ragChat.context.add({
             type: "html",
@@ -27,7 +29,7 @@ const Page = async ({params}: PageProps) => {
         })
         await redis.sadd('url-indexes', urlInput);
     }
-    return <ChatWrapper sessionId={session}/>
+    return <ChatWrapper sessionId={sessionId} initialMessages={initialMessages}/>
 }
 
 export default Page;

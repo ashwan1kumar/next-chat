@@ -34,7 +34,7 @@ export const Message = ({ content, isUserMessage }: MessageProps) => {
               </span>
             </div>
 
-            <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{content}</p>
+            <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{typeof content === 'string' ? content: JSON.stringify(content) }</p>
           </div>
         </div>
       </div>
