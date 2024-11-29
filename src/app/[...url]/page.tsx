@@ -7,18 +7,18 @@ import { cookies } from "next/headers";
 
 interface PageProps {
     params: {
-        url: string | string[] | undefined
-    }
+        url: string[]
+    },
+    searchParams?: Record<string, string | string[] | undefined>
 }
 
 function constructUrl({ url }: { url: string[] }){ 
     const urlTokens = url.map(token => decodeURIComponent(token));
     return urlTokens.join('//');
 }
-const Page = async ({params}: PageProps) => {
+const Page: React.FC<PageProps> = async ({params}: PageProps) => {
   const sessionCookie = (await cookies()).get("sessionId")?.value;
-    const resolvedParams = await params
-    const { url } = resolvedParams;
+    const { url } = params;
     const urlInput = constructUrl({ url: url as string[] })
     const isIndexed = await redis.sismember("url-indexes", urlInput);
     const sessionId = (urlInput + "--" + sessionCookie).replace(/\//g, "");
