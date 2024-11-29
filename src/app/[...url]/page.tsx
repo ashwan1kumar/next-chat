@@ -26,7 +26,8 @@ const Page: React.FC<PageProps> = async ({params}: PageProps) => {
     if(!isIndexed){
         await ragChat.context.add({
             type: "html",
-            source: urlInput
+            source: urlInput,
+            config: { chunkOverlap: 50, chunkSize: 200 },
         })
         await redis.sadd('url-indexes', urlInput);
     }
