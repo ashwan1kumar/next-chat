@@ -50,7 +50,7 @@ export default function Home() {
         </div>
 
         <div className="text-sm text-gray-600 dark:text-gray-400">
-          <p>Our AI will crawl the website and let you chat about its content using advanced RAG technology.</p>
+          <p>Our AI will crawl the website and let you chat about its content using RAG model.</p>
         </div>
       </div>
     </main>
